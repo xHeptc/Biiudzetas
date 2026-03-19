@@ -3,6 +3,7 @@ import pattern from "../enums/pattern.js";
 import bcrypt from "bcrypt";
 import generateToken from "../functions/generateToken.js";
 import asyncHandler from "express-async-handler";
+import jwt from "jsonwebtoken"
 
 // Register
 // POST
@@ -135,3 +136,26 @@ export const Logout = asyncHandler(async (req, res) => {
   res.send();
 })
 
+// Check
+// GET
+// /auth/check
+// @access Public
+export const Check = asyncHandler(async (req, res, next) => {
+  const Token = req.cookies.token
+
+  if (!Token){
+    return res.status(400).json({
+      message: "Missing token"
+    })
+  }
+
+  const Decoded = jwt.verify(Token, process.env.JWT_SECRET)
+  const User = await UserModel.findById (Decoded.id)
+
+  if (!User){
+    return res.status(404)
+  }
+
+  req.currentUser = User
+  next()
+})
