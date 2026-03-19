@@ -10,7 +10,7 @@ const User = require("../models/userModel.js");
 
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ userEmail: email });
+  const user = await User.findOne({ email: email });
   if (!user) {
     res.status(400);
     throw new Error("Invalid user credentials");
@@ -23,8 +23,8 @@ const loginUser = asyncHandler(async (req, res) => {
   }
   res.status(200).json({
     _id: user.id,
-    userName: user.userName,
-    userEmail: user.userEmail,
+    username: user.userName,
+    email: user.userEmail,
     role: user.role,
     token: generateToken(user.id),
   });
