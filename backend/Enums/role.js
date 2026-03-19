@@ -1,4 +1,6 @@
-export default Enums = {
+const Role = {
      USER: 'user',
      ADMIN: 'admin'
 }
+
+export default Role

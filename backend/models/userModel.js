@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import role from "..//role.js"
+import role from "../enums/role.js"
 
 const UserSchema = mongoose.Schema({
      username: { type: String, min: 3, required: true },
@@ -8,5 +8,5 @@ const UserSchema = mongoose.Schema({
      role: { type: String, default: role.USER }
 }, { timestamps: true })
 
-const UserModel = mongoose.model(UserSchema)
+const UserModel = mongoose.model("User", UserSchema)
 export default UserModel
