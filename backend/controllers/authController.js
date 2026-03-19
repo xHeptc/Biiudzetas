@@ -3,13 +3,18 @@ import pattern from "../enums/pattern.js";
 import bcrypt from "bcrypt";
 import generateToken from "../functions/generateToken.js";
 import asyncHandler from "express-async-handler";
+import jwt from "jsonwebtoken"
 
-export const Register = async (req, res) => {
+// Register
+// POST
+// /auth/register
+// @access Public
+export const Register = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
 
   // Field validation \\
   if (username === null || email === null || password === null) {
-    res.status(404).json({
+    return res.status(400).json({
       message: "Fill in missing fields",
     });
   }
@@ -20,26 +25,26 @@ export const Register = async (req, res) => {
     typeof email != "string" ||
     typeof password != "string"
   ) {
-    res.status(404).json({
+    return res.status(400).json({
       message: "Invalid fields",
     });
   }
 
   if (username.length < 3) {
-    res.status(404).json({
+    return res.status(400).json({
       message: "Username must be at least 3 characters long",
     });
   }
 
   if (password.length < 6) {
-    res.status(404).json({
+    return res.status(400).json({
       message: "Password must be at least 6 characters long",
     });
   }
 
   // Email pattern assertion \\
   if (!pattern.EMAIL.test(email)) {
-    res.status(404).json({
+    return res.status(400).json({
       message: "Email is invalid",
     });
   }
@@ -49,7 +54,7 @@ export const Register = async (req, res) => {
 
   const EmailUsed = await UserModel.findOne({ email });
   if (EmailUsed) {
-    res.status(404).json({
+    return res.status(400).json({
       message: "Account with this email already exists",
     });
   }
@@ -81,25 +86,28 @@ export const Register = async (req, res) => {
     email,
     role: User.role,
   });
-};
+});
 
-// login
+// Login
 // POST
-// route /users/login
-// @access  Public
-
-export const loginUser = asyncHandler(async (req, res) => {
+// route /auth/login
+// @access Public
+export const Login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+
   const user = await UserModel.findOne({ email: email });
   if (!user) {
-    res.status(400);
-    throw new Error("Invalid user credentials");
+    return res.status(400).json({
+      message: "Invalid credentials"
+    });
   }
+
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    res.status(400);
-    throw new Error("Invalid user credentials");
+    return res.status(400).json({
+      message: "Invalid credentials"
+    });
   }
 
   const Token = generateToken(user._id);
@@ -111,10 +119,43 @@ export const loginUser = asyncHandler(async (req, res) => {
     expiresIn: 7 * 24 * 60 * 1000,
   });
 
-  res.status(200).json({
+  return res.status(200).json({
     _id: user.id,
-    username: user.userName,
-    email: user.userEmail,
+    username: user.username,
+    email: user.email,
     role: user.role,
   });
 });
+
+// Logout
+// POST
+// /auth/logout
+// @access Public
+export const Logout = asyncHandler(async (req, res) => {
+  res.clearCookie("token", { path: "/" })
+  res.send();
+})
+
+// Check
+// GET
+// /auth/check
+// @access Public
+export const Check = asyncHandler(async (req, res, next) => {
+  const Token = req.cookies.token
+
+  if (!Token){
+    return res.status(400).json({
+      message: "Missing token"
+    })
+  }
+
+  const Decoded = jwt.verify(Token, process.env.JWT_SECRET)
+  const User = await UserModel.findById (Decoded.id)
+
+  if (!User){
+    return res.status(404)
+  }
+
+  req.currentUser = User
+  next()
+})

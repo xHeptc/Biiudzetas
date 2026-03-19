@@ -2,6 +2,7 @@ import express from 'express'
 import connectDB from './config/database.js'
 
 import { configDotenv } from 'dotenv'
+import cookieParser from 'cookie-parser'
 import AuthRouter from "./routes/authRoute.js"
 
 import cors from "cors";
@@ -10,6 +11,7 @@ import cors from "cors";
 const app = express()
 app.use(express.json())
 app.use(cors());
+app.use(cookieParser())
 
 // ENV and DB Initialization \\
 configDotenv()
