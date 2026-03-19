@@ -3,30 +3,48 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* BACKGROUND */
 .container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle at top, #0f172a, #020617);
+  padding: 20px;
 }
 
+/* CARD */
 .card {
-  width: 350px;
-  padding: 30px;
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 25px;
   border-radius: 20px;
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(15px);
   border: 1px solid #1e293b;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
 }
 
+/* LOGO */
+.logo {
+  color: #4ade80;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* TITLES */
 .card h2 {
   color: white;
-  text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 5px;
 }
 
+.subtitle {
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* INPUTS */
 .input-group {
   margin-bottom: 15px;
 }
@@ -52,9 +70,10 @@ body {
   box-shadow: 0 0 0 2px #4ade80;
 }
 
+/* BUTTON */
 .submit-btn {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border-radius: 30px;
   border: none;
   background: #4ade80;
@@ -63,20 +82,22 @@ body {
   cursor: pointer;
   margin-top: 10px;
   transition: 0.3s;
-  box-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
 }
 
 .submit-btn:hover {
   background: #22c55e;
 }
 
+/* DIVIDER */
 .divider {
   text-align: center;
   color: #64748b;
   font-size: 12px;
-  margin: 15px 0;
+  margin: 20px 0 10px;
 }
 
+/* SOCIAL */
 .socials {
   display: flex;
   gap: 10px;
@@ -84,7 +105,7 @@ body {
 
 .socials button {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   border-radius: 10px;
   border: none;
   background: #1e293b;
@@ -95,4 +116,41 @@ body {
 
 .socials button:hover {
   background: #334155;
+}
+
+/* LOGIN TEXT */
+.login-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.login-text span {
+  color: #4ade80;
+  cursor: pointer;
+}
+
+/* 📱 MOBILE tweaks */
+@media (max-width: 480px) {
+  .card {
+    padding: 25px 20px;
+    border-radius: 16px;
+  }
+
+  .submit-btn {
+    padding: 12px;
+  }
+
+  .socials {
+    flex-direction: column;
+  }
+}
+
+/* 💻 LARGE screens */
+@media (min-width: 768px) {
+  .card {
+    max-width: 450px;
+    padding: 40px;
+  }
 }

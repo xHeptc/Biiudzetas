@@ -4,9 +4,12 @@ import connectDB from './config/database.js'
 import { configDotenv } from 'dotenv'
 import AuthRouter from "./routes/authRoute.js"
 
+import cors from "cors";
+
 // Main Application \\
 const app = express()
 app.use(express.json())
+app.use(cors());
 
 // ENV and DB Initialization \\
 configDotenv()
