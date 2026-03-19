@@ -2,11 +2,13 @@ import express from 'express'
 import connectDB from './config/database.js'
 
 import { configDotenv } from 'dotenv'
+import cookieParser from 'cookie-parser'
 import AuthRouter from "./routes/authRoute.js"
 
 // Main Application \\
 const app = express()
 app.use(express.json())
+app.use(cookieParser())
 
 // ENV and DB Initialization \\
 configDotenv()
