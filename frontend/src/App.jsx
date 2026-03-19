@@ -1,9 +1,11 @@
 import { Routes, Route } from "react-router";
+import { useState } from 'react'
 import DashboardPage from "./pages/Dashboardpage";
 import PiniginePage from "./pages/PiniginePage";
 import GrafikaiPage from "./pages/GrafikaiPage";
 import BiudzetasPage from "./pages/BiudzetasPage";
 import KortelesPage from "./pages/KortelesPage";
+import { Registration } from './components/Registration'
 
 function App() {
   return (
@@ -13,6 +15,7 @@ function App() {
       <Route path="/grafikai" element={<GrafikaiPage />} />
       <Route path="/biudzetas" element={<BiudzetasPage />} />
       <Route path="/korteles" element={<KortelesPage />} />
+      <Route path="/registracija" element={<Registration/>} />
     </Routes>
   );
 }
