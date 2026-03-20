@@ -51,6 +51,11 @@ export const Register = asyncHandler(async (req, res) => {
 
   // Username availability \\
   const UsernameUsed = await UserModel.findOne();
+  if (UsernameUsed){
+    return res.status(400).json({
+      message: "Username already taken"
+    })
+  }
 
   const EmailUsed = await UserModel.findOne({ email });
   if (EmailUsed) {
