@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import authStore from "../stores/authStore";
 import "../index.css";
+import authStore from "../stores/authStore";
 
-export const Registration = () => {
+export const Login = () => {
   const [email, setEmail] = useState("");
-  const [username, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  const { register } = authStore();
+  const { login } = authStore()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    register(username, email, password)
+    login(email, password)
   };
 
   return (
@@ -20,20 +18,10 @@ export const Registration = () => {
       <div className="card">
         <h1 className="logo">Biudžetas</h1>
 
-        <h2>Create Account</h2>
+        <h2>Login</h2>
         <p className="subtitle">Initialize your secure financial vault.</p>
 
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label>Full Name</label>
-            <input
-              type="text"
-              placeholder="John Doe"
-              value={username}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-
           <div className="input-group">
             <label>Email</label>
             <input
@@ -55,7 +43,7 @@ export const Registration = () => {
           </div>
 
           <button className="submit-btn" type="submit">
-            Complete Registration →
+            Login →
           </button>
 
           <p className="divider">OR SECURE LIVE</p>
@@ -66,7 +54,7 @@ export const Registration = () => {
           </div>
 
           <p className="login-text">
-            Already have a vault? <span>Login here</span>
+            Don't have an account? <span>Register here</span>
           </p>
         </form>
       </div>

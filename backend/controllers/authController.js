@@ -50,7 +50,7 @@ export const Register = asyncHandler(async (req, res) => {
   }
 
   // Username availability \\
-  const UsernameUsed = await UserModel.findOne();
+  const UsernameUsed = await UserModel.findOne({ username });
   if (UsernameUsed){
     return res.status(400).json({
       message: "Username already taken"
@@ -78,8 +78,8 @@ export const Register = asyncHandler(async (req, res) => {
 
   res.cookie("token", Token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "strict",
+    secure: false,
+    sameSite: "Lax",
     expiresIn: 7 * 24 * 60 * 1000,
   });
 
@@ -119,8 +119,8 @@ export const Login = asyncHandler(async (req, res) => {
 
   res.cookie("token", Token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "strict",
+    secure: false,
+    sameSite: "Lax",
     expiresIn: 7 * 24 * 60 * 1000,
   });
 
@@ -138,29 +138,22 @@ export const Login = asyncHandler(async (req, res) => {
 // @access Public
 export const Logout = asyncHandler(async (req, res) => {
   res.clearCookie("token", { path: "/" })
-  res.send();
+  res.send()
 })
 
 // Check
 // GET
 // /auth/check
 // @access Public
-export const Check = asyncHandler(async (req, res, next) => {
+export const Check = asyncHandler(async (req, res) => {
   const Token = req.cookies.token
 
   if (!Token){
-    return res.status(400).json({
-      message: "Missing token"
-    })
+    return res.json(null)
   }
 
   const Decoded = jwt.verify(Token, process.env.JWT_SECRET)
   const User = await UserModel.findById (Decoded.id)
 
-  if (!User){
-    return res.status(404)
-  }
-
-  req.currentUser = User
-  next()
+  return res.json(User)
 })
