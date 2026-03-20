@@ -50,7 +50,7 @@ export const Register = asyncHandler(async (req, res) => {
   }
 
   // Username availability \\
-  const UsernameUsed = await UserModel.findOne();
+  const UsernameUsed = await UserModel.findOne({ username });
   if (UsernameUsed){
     return res.status(400).json({
       message: "Username already taken"
@@ -138,7 +138,7 @@ export const Login = asyncHandler(async (req, res) => {
 // @access Public
 export const Logout = asyncHandler(async (req, res) => {
   res.clearCookie("token", { path: "/" })
-  res.send();
+  res.send()
 })
 
 // Check
