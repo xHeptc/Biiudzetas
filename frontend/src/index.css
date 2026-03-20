@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 /* BACKGROUND */
 .container {
   min-height: 100vh;
@@ -53,7 +58,8 @@
 
 .input-group input {
   width: 100%;
-  padding: 12px;
+  padding: 20px;
+  font-size: 20px;
   border-radius: 10px;
   border: none;
   background: #1e293b;
@@ -68,7 +74,7 @@
 /* BUTTON */
 .submit-btn {
   width: 100%;
-  padding: 14px;
+  padding: 18px;
   border-radius: 30px;
   border: none;
   background: #4ade80;
@@ -147,11 +153,7 @@
   .card {
     max-width: 450px;
     padding: 40px;
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}}}
+  }}
 
 :root {
   --bg-main: #081224;
@@ -656,7 +658,7 @@ a {
 
 .auth-form label {
   color: var(--text-soft);
-  font-size: 14px;
+  font-size: 30px;
   margin-top: 6px;
 }
 
@@ -678,7 +680,7 @@ a {
   background: var(--green);
   color: #041108;
   border-radius: 14px;
-  padding: 14px;
+  height: 56px;
   font-weight: 800;
 }
 
